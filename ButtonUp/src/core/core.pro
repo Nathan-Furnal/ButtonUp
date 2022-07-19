@@ -7,9 +7,14 @@ include(../../config.pri)
 
 CONFIG += $${LIB_MODE}
 
-HEADERS +=
+HEADERS += \
+    button.h \
+    buttonstack.h \
+    game.h
 
-SOURCES +=
+SOURCES += \
+    buttonstack.cpp \
+    game.cpp
 
 DISTFILES += \
     core.pri
