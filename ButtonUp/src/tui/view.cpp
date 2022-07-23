@@ -45,7 +45,28 @@ std::string View::displayButton(Button b) {
   }
 }
 
+void View::displayInfo() {
+  std::string state;
+  switch (m_game.getState()) {
+  case Game::BEGIN:
+    state = "Player pick";
+    break;
+  case Game::RED:
+    state = "Red player's turn";
+    break;
+  case Game::BLACK:
+    state = "Black player's turn";
+    break;
+  case Game::GAME_OVER:
+    state = "Game over";
+    break;
+  }
+  std::cout << "Game state: " << state << "      "
+            << "Current turn: " << m_game.turns() << "\n";
+}
+
 void View::displayBoard() {
+  displayInfo();
   std::cout << std::endl;
   for (size_t i = 0; i < ButtonStack::N_BUTTONS; i++) {
     std::cout << ButtonStack::N_BUTTONS - i << "| ";
@@ -77,6 +98,7 @@ std::string View::pickStarter() {
 
 std::string View::readLine() {
   std::string line;
+  // Skips a line all the time, not useful for constant I/O with users
   // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   std::getline(std::cin, line);
   return line;

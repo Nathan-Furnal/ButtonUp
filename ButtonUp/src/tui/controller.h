@@ -5,8 +5,8 @@
 
 class Controller {
 private:
-  Game m_game;
-  View m_view;
+  Game &m_game;
+  View &m_view;
 
 public:
   Controller(Game &, View &);

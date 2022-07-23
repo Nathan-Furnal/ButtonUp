@@ -22,6 +22,7 @@ public:
   std::vector<int> nonEmptyStacks();
   std::vector<int> nonEmptyStacks(int startIdx);
   ButtonStack &operator[](int);
+  int turns();
   /**
    * @brief Subscribes the observer to the observers list.
    * @param obs the observer to add to the list.

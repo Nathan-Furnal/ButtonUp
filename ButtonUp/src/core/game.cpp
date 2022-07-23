@@ -9,7 +9,7 @@ Game::GameState Game::getState() { return m_state; }
 
 void Game::setState(Game::GameState gs) { m_state = gs; }
 
-bool Game::isGameOver() { return m_turns == 7; }
+bool Game::isGameOver() { return m_turns == 8; }
 
 void Game::reset() {
   m_state = GameState::BEGIN;
@@ -92,7 +92,7 @@ void Game::moveStack(int srcPos) {
     // dump what's left on the buttons in the last usable stack
     int lastIdx = i;
     while (i < nButtons) {
-      m_stacks[nonEmptyIndices[lastIdx + 1]].push(m_stacks[srcPos][i]);
+      m_stacks[nonEmptyIndices[lastIdx]].push(m_stacks[srcPos][i]);
       i++;
     }
   }
@@ -131,3 +131,5 @@ void Game::computeRoundPoints() {
 }
 
 ButtonStack &Game::operator[](int idx) { return m_stacks.at(idx); }
+
+int Game::turns() { return m_turns; }

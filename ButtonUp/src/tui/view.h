@@ -6,7 +6,7 @@
 
 class View : public Observer {
 private:
-  Game m_game;
+  Game &m_game;
 
 public:
   View(Game &);
@@ -17,6 +17,7 @@ public:
   std::string pickStarter();
   std::string readLine();
   void update() override;
+  void displayInfo();
 };
 
 #endif // VIEW_H
