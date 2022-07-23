@@ -7,4 +7,5 @@ include(../../config.pri)
 
 INCLUDEPATH += ../../libs/
 
-SOURCES +=
+SOURCES += \
+    main.cpp

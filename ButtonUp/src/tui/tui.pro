@@ -5,5 +5,11 @@ CONFIG -= qt
 
 include(../../config.pri)
 
-HEADERS +=
-SOURCES +=
+HEADERS += \
+    controller.h \
+    util.h \
+    view.h
+SOURCES += \
+    controller.cpp \
+    main.cpp \
+    view.cpp

@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = core1.0.0
-DISTDIR = /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/core/.tmp/core1.0.0
+DISTDIR = /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core/.tmp/core1.0.0
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -49,8 +49,10 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       =  
-OBJECTS       = 
+SOURCES       = buttonstack.cpp \
+		game.cpp 
+OBJECTS       = buttonstack.o \
+		game.o
 DIST          = core.pri \
 		/usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
@@ -403,7 +405,11 @@ DIST          = core.pri \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		core.pro  
+		core.pro button.h \
+		buttonstack.h \
+		game.h \
+		observer.h buttonstack.cpp \
+		game.cpp
 QMAKE_TARGET  = core
 DESTDIR       = 
 TARGET        = libcore.a
@@ -1141,6 +1147,7 @@ distdir: FORCE
 
 
 clean: compiler_clean 
+	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) *~ core *.core
 
 
@@ -1164,6 +1171,16 @@ compiler_lex_clean:
 compiler_clean: 
 
 ####### Compile
+
+buttonstack.o: buttonstack.cpp buttonstack.h \
+		button.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o buttonstack.o buttonstack.cpp
+
+game.o: game.cpp game.h \
+		buttonstack.h \
+		button.h \
+		observer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o game.cpp
 
 ####### Install
 

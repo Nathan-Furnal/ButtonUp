@@ -37,10 +37,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = tui1.0.0
-DISTDIR = /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/tui/.tmp/tui1.0.0
+DISTDIR = /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/tui/.tmp/tui1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -L/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/core -lcore   
+LIBS          = $(SUBLIBS) -L/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core -lcore   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,8 +52,12 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       =  
-OBJECTS       = 
+SOURCES       = controller.cpp \
+		main.cpp \
+		view.cpp 
+OBJECTS       = controller.o \
+		main.o \
+		view.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -406,7 +410,11 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		tui.pro  
+		tui.pro controller.h \
+		util.h \
+		view.h controller.cpp \
+		main.cpp \
+		view.cpp
 QMAKE_TARGET  = tui
 DESTDIR       = 
 TARGET        = tui
@@ -415,7 +423,7 @@ TARGET        = tui
 first: all
 ####### Build rules
 
-tui: /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/core/libcore.a $(OBJECTS)  
+tui: /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core/libcore.a $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: tui.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -1142,6 +1150,7 @@ distdir: FORCE
 
 
 clean: compiler_clean 
+	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) *~ core *.core
 
 
@@ -1165,6 +1174,30 @@ compiler_lex_clean:
 compiler_clean: 
 
 ####### Compile
+
+controller.o: controller.cpp controller.h \
+		view.h \
+		../core/game.h \
+		../core/buttonstack.h \
+		../core/button.h \
+		../core/observer.h \
+		util.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o controller.o controller.cpp
+
+main.o: main.cpp controller.h \
+		view.h \
+		../core/game.h \
+		../core/buttonstack.h \
+		../core/button.h \
+		../core/observer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+view.o: view.cpp view.h \
+		../core/game.h \
+		../core/buttonstack.h \
+		../core/button.h \
+		../core/observer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o view.o view.cpp
 
 ####### Install
 

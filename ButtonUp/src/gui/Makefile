@@ -37,10 +37,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = gui1.0.0
-DISTDIR = /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/gui/.tmp/gui1.0.0
+DISTDIR = /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui/.tmp/gui1.0.0
 LINK          = g++
 LFLAGS        = -fPIC
-LIBS          = $(SUBLIBS) -L/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/core -lcore /usr/lib/libQt5Widgets.so /usr/lib/libQt5Gui.so /usr/lib/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) -L/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core -lcore /usr/lib/libQt5Widgets.so /usr/lib/libQt5Gui.so /usr/lib/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,8 +52,8 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       =  
-OBJECTS       = 
+SOURCES       = main.cpp 
+OBJECTS       = main.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -414,7 +414,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		gui.pro  
+		gui.pro  main.cpp
 QMAKE_TARGET  = gui
 DESTDIR       = 
 TARGET        = gui
@@ -423,7 +423,7 @@ TARGET        = gui
 first: all
 ####### Build rules
 
-gui: /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/core/libcore.a $(OBJECTS)  
+gui: /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core/libcore.a $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: gui.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -1164,9 +1164,11 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
+	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) *~ core *.core
 
 
@@ -1211,15 +1213,18 @@ compiler_clean: compiler_moc_predefs_clean
 
 ####### Compile
 
+main.o: main.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
 ####### Install
 
 install_target: first FORCE
-	@test -d $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/gui/opt/gui/bin || mkdir -p $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/gui/opt/gui/bin
-	$(QINSTALL_PROGRAM) $(QMAKE_TARGET) $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/gui/opt/gui/bin/$(QMAKE_TARGET)
+	@test -d $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui/opt/gui/bin || mkdir -p $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui/opt/gui/bin
+	$(QINSTALL_PROGRAM) $(QMAKE_TARGET) $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui/opt/gui/bin/$(QMAKE_TARGET)
 
 uninstall_target: FORCE
-	-$(DEL_FILE) $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/gui/opt/gui/bin/$(QMAKE_TARGET)
-	-$(DEL_DIR) $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/gui/opt/gui/bin/ 
+	-$(DEL_FILE) $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui/opt/gui/bin/$(QMAKE_TARGET)
+	-$(DEL_DIR) $(INSTALL_ROOT)/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui/opt/gui/bin/ 
 
 
 install: install_target  FORCE

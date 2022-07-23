@@ -37,10 +37,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = unitTests1.0.0
-DISTDIR = /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/test/unitTests/.tmp/unitTests1.0.0
+DISTDIR = /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/test/unitTests/.tmp/unitTests1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -L/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/core -lcore   
+LIBS          = $(SUBLIBS) -L/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core -lcore   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,8 +52,8 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       =  
-OBJECTS       = 
+SOURCES       = main.cpp 
+OBJECTS       = main.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -406,7 +406,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		unitTests.pro  
+		unitTests.pro  main.cpp
 QMAKE_TARGET  = unitTests
 DESTDIR       = 
 TARGET        = unitTests
@@ -415,7 +415,7 @@ TARGET        = unitTests
 first: all
 ####### Build rules
 
-unitTests: /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonsUp/src/core/libcore.a $(OBJECTS)  
+unitTests: /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core/libcore.a $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: unitTests.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -1142,6 +1142,7 @@ distdir: FORCE
 
 
 clean: compiler_clean 
+	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) *~ core *.core
 
 
@@ -1165,6 +1166,9 @@ compiler_lex_clean:
 compiler_clean: 
 
 ####### Compile
+
+main.o: main.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 ####### Install
 
