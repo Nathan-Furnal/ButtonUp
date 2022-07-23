@@ -10,7 +10,8 @@ CONFIG += $${LIB_MODE}
 HEADERS += \
     button.h \
     buttonstack.h \
-    game.h
+    game.h \
+    observer.h
 
 SOURCES += \
     buttonstack.cpp \

@@ -1,23 +1,25 @@
 #ifndef BUTTONSTACK_H
 #define BUTTONSTACK_H
-#include <array>
 #include "button.h"
+#include <array>
 
-class ButtonStack{
-private:
-    int m_stackPointer = 0;
-    std::array<Button, 9> m_stack;
-
+class ButtonStack {
 public:
-    ButtonStack(enum Button b);
-    constexpr bool hasWhite();
-    constexpr bool isEmpty();
-    constexpr int nButtons();
-    void push(enum Button b);
-    constexpr Button pop();
-    void reset();
-    void stackOnto(ButtonStack& bs);
-    enum Button& operator[](int);
+  ButtonStack();
+  static const int N_BUTTONS = 9;
+  bool hasWhite();
+  bool isEmpty();
+  int nButtons();
+  void push(enum Button b);
+  Button pop();
+  void reset();
+  void stackOnto(ButtonStack &bs);
+  bool has2SameButtons();
+  enum Button operator[](int idx);
+
+private:
+  int m_stackPointer = 0;
+  std::array<Button, 9> m_stack;
 };
 
 #endif // BUTTONSTACK_H
