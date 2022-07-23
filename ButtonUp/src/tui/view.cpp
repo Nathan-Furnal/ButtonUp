@@ -1,5 +1,5 @@
 #include "view.h"
-
+#include <limits>
 View::View(Game &g) : m_game(g) { g.subscribe(*this); }
 
 void View::displayBanner() {
@@ -76,8 +76,9 @@ std::string View::pickStarter() {
 }
 
 std::string View::readLine() {
-  std::string str;
-  std::getline(std::cin, str);
-  return str;
+  std::string line;
+  // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  std::getline(std::cin, line);
+  return line;
 }
 void View::update() { displayBoard(); }

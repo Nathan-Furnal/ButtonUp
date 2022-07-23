@@ -45,9 +45,9 @@ private:
   int m_redVictoryPoints = 0;
   int m_blackVictoryPoints = 0;
   int m_turns = 0;
-  int m_roundResultRed;
-  int m_roundResultBlack;
-  int m_roundResult;
+  int m_roundResultRed = 0;
+  int m_roundResultBlack = 0;
+  int m_roundResult = 0;
   std::vector<Button> buttons{Button::WHITE, Button::WHITE, Button::WHITE,
                               Button::RED,   Button::RED,   Button::RED,
                               Button::BLACK, Button::BLACK, Button::BLACK};

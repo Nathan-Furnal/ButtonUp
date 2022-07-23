@@ -25,31 +25,39 @@ void Controller::parseStarter() {
 }
 
 void Controller::parseCommand() {
-  bool invalid = true;
-  while (invalid) {
-    std::string command = m_view.readLine();
-    auto words = util::split(command);
-    std::string cmd = words[0];
-    util::strtolower(cmd);
-    if (cmd == "move") {
-      if (util::isint(words[1])) {
-        int numVal = std::stoi(words[1]);
-        if (numVal > 0 && numVal <= 9) {
+  std::string command = m_view.readLine();
+  util::trim(command);
+  if (command.empty() || command == "" || command == "\n" ||
+      command == " ") { // typical bad input
+    std::cout << "Invalid command." << std::endl;
+    return;
+  }
+  auto words = util::split(command); // split on space
+  std::string cmd = words[0];        // isolate the first command
+  util::strtolower(cmd);             // sanitize
+  if (cmd == "move") {
+    if (words.size() > 1 &&
+        util::isint(words[1])) { // check if the second arg is an integer
+      int numVal = std::stoi(words[1]);
+      if (numVal > 0 && numVal <= 9) {
+        if (m_game[numVal - 1].hasWhite()) {
           m_game.moveStack(numVal - 1);
-          invalid = false;
+        } else {
+          std::cout << "Only stacks with white buttons can be moved."
+                    << std::endl;
         }
       } else {
-        std::cout << "Not a valid number." << std::endl;
+        std::cout << "Numbers must be in the range 1 to 9." << std::endl;
       }
-    } else if (cmd == "show") {
-      m_view.displayBoard();
-      invalid = false;
-    } else if (cmd == "help") {
-      std::cout << "Help is on the way" << std::endl;
-      invalid = false;
     } else {
-      std::cout << "Not a known command." << std::endl;
+      std::cout << "Not a valid number." << std::endl;
     }
+  } else if (cmd == "show") {
+    m_view.displayBoard();
+  } else if (cmd == "help") {
+    std::cout << "Help is on the way." << std::endl;
+  } else {
+    std::cout << "Not a known command." << std::endl;
   }
 }
 
@@ -57,6 +65,7 @@ void Controller::start() {
   m_view.displayBanner();
   parseStarter();
   m_view.displayBoard();
+  std::cin.ignore();
   while (m_game.getState() != Game::GAME_OVER) {
     parseCommand();
   }
