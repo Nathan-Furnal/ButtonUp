@@ -79,7 +79,7 @@ void Game::moveStack(int srcPos) {
       // avoid pushing to self, hence +1
       m_stacks[nonEmptyIndices[i + 1]].push(m_stacks[srcPos][i]);
     }
-    if (m_stacks[nButtons - 1].has2SameButtons()) {
+    if (m_stacks[nonEmptyIndices[nButtons]].has2SameButtons()) {
       replay = true;
     }
   } else { // number of buttons is strictly superior to available stacks

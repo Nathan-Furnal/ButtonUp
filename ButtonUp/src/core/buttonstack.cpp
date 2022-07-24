@@ -51,6 +51,6 @@ bool ButtonStack::has2SameButtons() {
   if (nButtons() < 2) {
     return false;
   } else {
-    return m_stack[m_stackPointer] == m_stack[m_stackPointer - 1];
+    return m_stack[m_stackPointer - 1] == m_stack[m_stackPointer - 2];
   }
 }
