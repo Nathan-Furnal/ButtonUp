@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -Wall -Wextra -g -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../core -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/lib/qt/mkspecs/linux-g++
+INCPATH       = -I. -I../core -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I. -I/usr/lib/qt/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -52,8 +52,15 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = main.cpp 
-OBJECTS       = main.o
+SOURCES       = main.cpp \
+		mainwindow.cpp \
+		qtmodel.cpp moc_mainwindow.cpp \
+		moc_qtmodel.cpp
+OBJECTS       = main.o \
+		mainwindow.o \
+		qtmodel.o \
+		moc_mainwindow.o \
+		moc_qtmodel.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -414,7 +421,10 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		gui.pro  main.cpp
+		gui.pro mainwindow.h \
+		qtmodel.h main.cpp \
+		mainwindow.cpp \
+		qtmodel.cpp
 QMAKE_TARGET  = gui
 DESTDIR       = 
 TARGET        = gui
@@ -423,7 +433,7 @@ TARGET        = gui
 first: all
 ####### Build rules
 
-gui: /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core/libcore.a $(OBJECTS)  
+gui: /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core/libcore.a ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: gui.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -1164,7 +1174,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h qtmodel.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp qtmodel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1195,26 +1207,68 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -Wall -Wextra -g -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_qtmodel.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_mainwindow.cpp moc_qtmodel.cpp
+moc_mainwindow.cpp: mainwindow.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui -I/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/12.1.0 -I/usr/include/c++/12.1.0/x86_64-pc-linux-gnu -I/usr/include/c++/12.1.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.1.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.1.0/include-fixed -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+
+moc_qtmodel.cpp: qtmodel.h \
+		../core/game.h \
+		../core/buttonstack.h \
+		../core/button.h \
+		../core/observer.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include /home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/gui -I/home/nathan/Drive/ESI/bloc-2021-22/SECONDE-SESS/DEV4/dev4-seconde-session/ButtonUp/src/core -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/12.1.0 -I/usr/include/c++/12.1.0/x86_64-pc-linux-gnu -I/usr/include/c++/12.1.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.1.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.1.0/include-fixed -I/usr/include qtmodel.h -o moc_qtmodel.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all:
+compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
+	-$(DEL_FILE) ui_mainwindow.h
+ui_mainwindow.h: mainwindow.ui \
+		/usr/bin/uic
+	/usr/bin/uic mainwindow.ui -o ui_mainwindow.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean 
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
-main.o: main.cpp 
+main.o: main.cpp mainwindow.h \
+		qtmodel.h \
+		../core/game.h \
+		../core/buttonstack.h \
+		../core/button.h \
+		../core/observer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+mainwindow.o: mainwindow.cpp mainwindow.h \
+		ui_mainwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
+
+qtmodel.o: qtmodel.cpp qtmodel.h \
+		../core/game.h \
+		../core/buttonstack.h \
+		../core/button.h \
+		../core/observer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtmodel.o qtmodel.cpp
+
+moc_mainwindow.o: moc_mainwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_qtmodel.o: moc_qtmodel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qtmodel.o moc_qtmodel.cpp
 
 ####### Install
 
