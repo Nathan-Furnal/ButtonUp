@@ -14,6 +14,8 @@ bool Game::isGameOver() { return m_turns == 8; }
 void Game::reset() {
   m_state = GameState::BEGIN;
   m_turns = 0;
+  m_roundResultBlack = 0;
+  m_roundResultRed = 0;
   m_roundResult = 0;
   for (size_t i = 0; i < N_STACKS; i++) {
     m_stacks[i].reset();
@@ -133,3 +135,7 @@ void Game::computeRoundPoints() {
 ButtonStack &Game::operator[](int idx) { return m_stacks.at(idx); }
 
 int Game::turns() { return m_turns; }
+int Game::redRoundResult() { return m_roundResultRed; }
+int Game::blackRoundResult() { return m_roundResultBlack; }
+int Game::redVictoryPoints() { return m_redVictoryPoints; }
+int Game::blackVictoryPoints() { return m_blackVictoryPoints; }

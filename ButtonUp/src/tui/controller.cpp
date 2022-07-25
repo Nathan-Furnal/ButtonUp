@@ -55,18 +55,65 @@ void Controller::parseCommand() {
   } else if (cmd == "show") {
     m_view.displayBoard();
   } else if (cmd == "help") {
-    std::cout << "Help is on the way." << std::endl;
+    m_view.displayHelp();
+  } else if (cmd == "quit" || cmd == "exit") {
+    exit();
   } else {
     std::cout << "Not a known command." << std::endl;
   }
 }
 
+void Controller::results() {
+  m_game.computeRoundPoints();
+  m_view.displayResult();
+  if (m_game.redVictoryPoints() >= 15 &&
+      m_game.redVictoryPoints() > m_game.blackVictoryPoints()) {
+    std::cout << "The red player has reached at least 15 victory points and "
+                 "won the game!\n";
+  } else if (m_game.blackVictoryPoints() >= 15 &&
+             m_game.blackVictoryPoints() > m_game.redVictoryPoints()) {
+    std::cout << "The black player has reached at least 15 victory points and "
+                 "won the game!\n";
+  } else {
+    std::cout << "Neither player has reached the victory points total or beat "
+                 "the other player, fancy a "
+                 "rematch?\n";
+  }
+  std::cout << std::endl;
+}
+
+void Controller::replay() {
+  bool invalid = true;
+  while (invalid) {
+    std::cout << "Would you like to play again? yes or no (y/n)" << std::endl;
+    std::string answer = m_view.readLine();
+    cleanupInput(answer);
+    if (answer == "yes" || answer == "y") {
+      m_game.reset();
+      m_game.shuffleStacks();
+      invalid = false;
+
+    } else if (answer == "no" || answer == "n") {
+      invalid = false;
+      exit();
+    } else {
+      std::cout << "Not a known command. Please answer yes or no (y/n).\n";
+    }
+  }
+}
+
+void Controller::exit() { std::exit(EXIT_SUCCESS); }
+
 void Controller::start() {
   m_view.displayBanner();
-  parseStarter();
-  m_view.displayBoard();
-  std::cin.ignore();
-  while (m_game.getState() != Game::GAME_OVER) {
-    parseCommand();
+  while (true) {
+    parseStarter();
+    m_view.displayBoard();
+    std::cin.ignore();
+    while (m_game.getState() != Game::GAME_OVER) {
+      parseCommand();
+    }
+    results();
+    replay();
   }
 }

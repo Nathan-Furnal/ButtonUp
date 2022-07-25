@@ -38,6 +38,10 @@ public:
   void notifyAll() override;
 
   void computeRoundPoints();
+  int redRoundResult();
+  int blackRoundResult();
+  int redVictoryPoints();
+  int blackVictoryPoints();
 
 private:
   std::vector<std::reference_wrapper<Observer>> observers;

@@ -1,5 +1,5 @@
 #include "view.h"
-#include <limits>
+#include <iomanip>
 View::View(Game &g) : m_game(g) { g.subscribe(*this); }
 
 void View::displayBanner() {
@@ -104,3 +104,38 @@ std::string View::readLine() {
   return line;
 }
 void View::update() { displayBoard(); }
+
+void View::displayResult() {
+  int redPoints = m_game.redRoundResult();
+  int blackPoints = m_game.blackRoundResult();
+  std::cout << "#### Results of the round ####" << std::endl;
+  std::cout << std::endl;
+  std::cout << "Red player's points: " << redPoints << std::endl;
+  std::cout << "Black player's points: " << blackPoints << std::endl;
+  std::cout << "Victory points are the difference between round points."
+            << std::endl;
+  if (redPoints == blackPoints) {
+    std::cout << "It's a draw! No victory points were added.\n";
+  } else if (redPoints > blackPoints) {
+    std::cout << "Red player wins! " << redPoints - blackPoints
+              << " victory points were added to the player's total.\n";
+  } else {
+    std::cout << "Black player wins! " << blackPoints - redPoints
+              << " victory points were added to the player's total.\n";
+  }
+}
+
+void View::displayHelp() {
+  std::cout << "### Help ###\n\n";
+  std::cout
+      << std::left << std::setw(20) << "move <VALUE>"
+      << " - moves the selected stack from left to right if it contains a "
+         "white button."
+      << std::endl;
+  std::cout << std::left << std::setw(20) << "show"
+            << " - shows the board." << std::endl;
+  std::cout << std::left << std::setw(20) << "help"
+            << " - shows this help menu." << std::endl;
+  std::cout << std::left << std::setw(20) << "[quit|exit]"
+            << " - exits the game and the window." << std::endl;
+}

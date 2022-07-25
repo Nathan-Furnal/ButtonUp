@@ -14,6 +14,9 @@ public:
   void parseStarter();
   void parseCommand();
   void start();
+  void results();
+  void replay();
+  void exit();
 };
 
 #endif // CONTROLLER_H

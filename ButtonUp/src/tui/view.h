@@ -18,6 +18,8 @@ public:
   std::string readLine();
   void update() override;
   void displayInfo();
+  void displayResult();
+  void displayHelp();
 };
 
 #endif // VIEW_H
