@@ -138,4 +138,13 @@ void View::displayHelp() {
             << " - shows this help menu." << std::endl;
   std::cout << std::left << std::setw(20) << "[quit|exit]"
             << " - exits the game and the window." << std::endl;
+  std::cout << std::left << std::setw(20) << "points"
+            << " - displays players victory points." << std::endl;
+}
+
+void View::displayPoints() {
+  std::cout << "Red player has " << m_game.redVictoryPoints()
+            << " victory points." << std::endl;
+  std::cout << "Black player has " << m_game.blackVictoryPoints()
+            << " victory points." << std::endl;
 }

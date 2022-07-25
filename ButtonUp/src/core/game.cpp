@@ -22,23 +22,20 @@ void Game::reset() {
   }
 }
 
-void Game::shuffleStacks() {
-  auto rng = std::default_random_engine{};
-  std::shuffle(buttons.begin(), buttons.end(), rng);
+void Game::shuffleStacks(bool testMode) {
+  if (!testMode) {
+    auto rng = std::default_random_engine{};
+    std::shuffle(buttons.begin(), buttons.end(), rng);
+  }
+  if (testMode) {
+    buttons = {Button::WHITE, Button::WHITE, Button::WHITE,
+               Button::RED,   Button::RED,   Button::RED,
+               Button::BLACK, Button::BLACK, Button::BLACK};
+  }
   for (size_t i = 0; i < N_STACKS; i++) {
     m_stacks.push_back(ButtonStack());
     m_stacks[i].push(buttons[i]);
   }
-}
-
-std::vector<int> Game::nonEmptyStacks() {
-  std::vector<int> nonEmptyIndices;
-  nonEmptyIndices.reserve(N_STACKS);
-  for (size_t i = 0; i < N_STACKS; i++) {
-    if (!m_stacks[i].isEmpty())
-      nonEmptyIndices.push_back(i);
-  }
-  return nonEmptyIndices;
 }
 
 std::vector<int> Game::nonEmptyStacks(int startIdx) {
@@ -113,7 +110,7 @@ void Game::moveStack(int srcPos) {
 }
 
 void Game::computeRoundPoints() {
-  int idx = nonEmptyStacks()[0];
+  int idx = nonEmptyStacks(0)[0];
   for (size_t i = 0; i < ButtonStack::N_BUTTONS; ++i) {
     if (m_stacks[idx][i] == Button::RED) {
       m_roundResultRed += i + 1;

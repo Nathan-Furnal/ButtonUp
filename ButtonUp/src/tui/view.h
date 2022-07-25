@@ -20,6 +20,7 @@ public:
   void displayInfo();
   void displayResult();
   void displayHelp();
+  void displayPoints();
 };
 
 #endif // VIEW_H

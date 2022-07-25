@@ -20,29 +20,9 @@ void ButtonStack::push(enum Button b) {
   }
 }
 
-Button ButtonStack::pop() {
-  if (!isEmpty()) {
-    Button b = m_stack[--m_stackPointer];
-    m_stack[m_stackPointer] = Button::EMPTY;
-    return b;
-  } else {
-    return Button::EMPTY;
-  }
-}
-
 void ButtonStack::reset() {
   m_stackPointer = 0;
   std::fill(m_stack.begin(), m_stack.end(), Button::EMPTY);
-}
-
-void ButtonStack::stackOnto(ButtonStack &otherStack) {
-  int i = 0;
-  Button b = m_stack[i];
-  while (b != Button::EMPTY) {
-    otherStack.push(b);
-    b = m_stack[++i];
-  }
-  reset();
 }
 
 enum Button ButtonStack::operator[](int idx) { return m_stack.at(idx); }

@@ -11,9 +11,7 @@ public:
   bool isEmpty();
   int nButtons();
   void push(enum Button b);
-  Button pop();
   void reset();
-  void stackOnto(ButtonStack &bs);
   bool has2SameButtons();
   enum Button operator[](int idx);
 

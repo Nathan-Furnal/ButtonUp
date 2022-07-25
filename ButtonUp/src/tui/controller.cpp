@@ -58,6 +58,8 @@ void Controller::parseCommand() {
     m_view.displayHelp();
   } else if (cmd == "quit" || cmd == "exit") {
     exit();
+  } else if (cmd == "points") {
+    m_view.displayPoints();
   } else {
     std::cout << "Not a known command." << std::endl;
   }

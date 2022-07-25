@@ -18,8 +18,7 @@ public:
   void moveStack(int srcPos);
   bool isGameOver();
   void reset();
-  void shuffleStacks();
-  std::vector<int> nonEmptyStacks();
+  void shuffleStacks(bool testMode = false);
   std::vector<int> nonEmptyStacks(int startIdx);
   ButtonStack &operator[](int);
   int turns();
