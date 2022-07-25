@@ -5,7 +5,7 @@ Game::Game() {
   shuffleStacks();
 }
 
-Game::GameState Game::getState() { return m_state; }
+Game::GameState Game::getState() const { return m_state; }
 
 void Game::setState(Game::GameState gs) { m_state = gs; }
 

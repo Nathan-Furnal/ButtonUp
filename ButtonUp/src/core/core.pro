@@ -11,7 +11,8 @@ HEADERS += \
     button.h \
     buttonstack.h \
     game.h \
-    observer.h
+    observer.h \
+    util.h
 
 SOURCES += \
     buttonstack.cpp \
