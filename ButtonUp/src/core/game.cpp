@@ -131,8 +131,8 @@ void Game::computeRoundPoints() {
 
 ButtonStack &Game::operator[](int idx) { return m_stacks.at(idx); }
 
-int Game::turns() { return m_turns; }
-int Game::redRoundResult() { return m_roundResultRed; }
-int Game::blackRoundResult() { return m_roundResultBlack; }
-int Game::redVictoryPoints() { return m_redVictoryPoints; }
-int Game::blackVictoryPoints() { return m_blackVictoryPoints; }
+int Game::turns() const { return m_turns; }
+int Game::redRoundResult() const { return m_roundResultRed; }
+int Game::blackRoundResult() const { return m_roundResultBlack; }
+int Game::redVictoryPoints() const { return m_redVictoryPoints; }
+int Game::blackVictoryPoints() const { return m_blackVictoryPoints; }

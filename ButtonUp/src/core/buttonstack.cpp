@@ -2,9 +2,9 @@
 #include "button.h"
 
 ButtonStack::ButtonStack() { m_stack.fill(Button::EMPTY); }
-bool ButtonStack::isEmpty() { return m_stack[0] == Button::EMPTY; }
+bool ButtonStack::isEmpty() const { return m_stack[0] == Button::EMPTY; }
 
-bool ButtonStack::hasWhite() {
+bool ButtonStack::hasWhite() const {
   for (auto const &el : m_stack) {
     if (el == Button::WHITE)
       return true;
@@ -12,7 +12,7 @@ bool ButtonStack::hasWhite() {
   return false;
 }
 
-int ButtonStack::nButtons() { return m_stackPointer; }
+int ButtonStack::nButtons() const { return m_stackPointer; }
 
 void ButtonStack::push(enum Button b) {
   if (b != Button::EMPTY && m_stackPointer <= N_BUTTONS) {

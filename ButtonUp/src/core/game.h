@@ -21,7 +21,6 @@ public:
   void shuffleStacks(bool testMode = false);
   std::vector<int> nonEmptyStacks(int startIdx);
   ButtonStack &operator[](int);
-  int turns();
   /**
    * @brief Subscribes the observer to the observers list.
    * @param obs the observer to add to the list.
@@ -37,10 +36,11 @@ public:
   void notifyAll() override;
 
   void computeRoundPoints();
-  int redRoundResult();
-  int blackRoundResult();
-  int redVictoryPoints();
-  int blackVictoryPoints();
+  int turns() const;
+  int redRoundResult() const;
+  int blackRoundResult() const;
+  int redVictoryPoints() const;
+  int blackVictoryPoints() const;
 
 private:
   std::vector<std::reference_wrapper<Observer>> observers;
