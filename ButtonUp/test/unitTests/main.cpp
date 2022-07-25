@@ -1,6 +1,7 @@
-#include <iostream>
+#define CATCH_CONFIG_RUNNER
+#include <catch2/catch.hpp>
 
-int main(void) {
-  std::cout << "Placeholder for tests";
-  return 0;
+int main(int argc, char **argv) {
+  int result = Catch::Session().run(argc, argv);
+  return result;
 }
