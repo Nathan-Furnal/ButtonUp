@@ -41,12 +41,3 @@ Makefile*
 
 # pas de fichier .qmake.stash
 .qmake.stash
-
-# pas de cache
-
-.cache/
-
-# pas d'executables
-
-tui
-gui
