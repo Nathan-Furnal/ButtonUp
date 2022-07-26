@@ -9,12 +9,16 @@ include(../../config.pri)
 # DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000 # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    controller.cpp \
     main.cpp \
     mainwindow.cpp \
-    qtmodel.cpp
+    qtmodel.cpp \
+    view.cpp
 HEADERS += \
+    controller.h \
     mainwindow.h \
-    qtmodel.h
+    qtmodel.h \
+    view.h
 
 # Default rules for deployment.
 LIBRARY_OUT_PWD = $$clean_path($$OUT_PWD/$$relative_path($$PWD, $$_PRO_FILE_PWD_))

@@ -1,6 +1,8 @@
 #include "qtmodel.h"
 
 #include <QBrush>
+#include <QMessageBox>
+#include <QModelIndex>
 
 QtModel::QtModel(QObject *parent) : QAbstractTableModel(parent) {}
 
@@ -38,13 +40,26 @@ QVariant QtModel::data(const QModelIndex &index, int role) const {
     Button dat = (*m_game)[col][ButtonStack::N_BUTTONS - row - 1];
     switch (dat) {
     case Button::EMPTY:
-      return QBrush(Qt::transparent);
+      return QBrush(QColorConstants::Svg::lightgray);
     case Button::RED:
-      return QBrush(Qt::red);
+      return QBrush(QColorConstants::Svg::orangered);
     case Button::BLACK:
-      return QBrush(Qt::black);
+      return QBrush(QColorConstants::Svg::black);
     case Button::WHITE:
-      return QBrush(Qt::white);
+      return QBrush(QColorConstants::Svg::ghostwhite);
+    }
+  }
+  if (role == Qt::ToolTipRole) {
+    Button dat = (*m_game)[col][ButtonStack::N_BUTTONS - row - 1];
+    switch (dat) {
+    case Button::EMPTY:
+      return QString("Empty button");
+    case Button::RED:
+      return QString("Red button");
+    case Button::BLACK:
+      return QString("Black button");
+    case Button::WHITE:
+      return QString("White button");
     }
   }
 
@@ -52,3 +67,18 @@ QVariant QtModel::data(const QModelIndex &index, int role) const {
 }
 
 void QtModel::setGame(Game *game) { m_game = game; }
+
+void QtModel::moveStacksOnColumnClicked(const QModelIndex &idx) {
+  if (idx.isValid()) {
+    if ((*m_game)[idx.column()].hasWhite()) {
+      m_game->moveStack(idx.column());
+      emit dataChanged(index(0, 0),
+                       index(ButtonStack::N_BUTTONS, m_game->N_STACKS));
+    } else {
+      QMessageBox msgBox;
+      msgBox.setWindowTitle("Rule notification 🎮");
+      msgBox.setText("Only stacks with white buttons can be moved.");
+      msgBox.exec();
+    }
+  }
+}

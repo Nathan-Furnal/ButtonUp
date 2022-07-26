@@ -23,6 +23,9 @@ public:
 
   void setGame(Game *game);
 
+public slots:
+  void moveStacksOnColumnClicked(const QModelIndex &idx);
+
 private:
   Game *m_game = nullptr;
 };

@@ -7,7 +7,6 @@ include(../../config.pri)
 
 HEADERS += \
     controller.h \
-    util.h \
     view.h
 SOURCES += \
     controller.cpp \
