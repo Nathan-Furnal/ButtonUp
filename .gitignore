@@ -37,8 +37,16 @@ doc/latex/
 *.user.*
 
 # pas de fichier Makefile.*
-Makefile.*
+Makefile*
 
 # pas de fichier .qmake.stash
 .qmake.stash
 
+# pas de cache
+
+.cache/
+
+# pas d'executables
+
+tui
+gui
