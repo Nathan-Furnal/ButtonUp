@@ -8,4 +8,6 @@ include(../../config.pri)
 INCLUDEPATH += ../../libs/
 
 SOURCES += \
-    main.cpp
+    main.cpp \
+    test_buttonStack.cpp \
+    test_game.cpp
