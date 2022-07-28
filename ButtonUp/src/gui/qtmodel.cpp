@@ -4,7 +4,9 @@
 #include <QMessageBox>
 #include <QModelIndex>
 
-QtModel::QtModel(QObject *parent) : QAbstractTableModel(parent) {}
+QtModel::QtModel(QObject *parent) : QAbstractTableModel(parent) {
+    m_game = new Game;
+}
 
 // See https://doc.qt.io/qt-6/modelview.html#2-1-a-read-only-table
 
@@ -66,14 +68,28 @@ QVariant QtModel::data(const QModelIndex &index, int role) const {
   return QVariant();
 }
 
-void QtModel::setGame(Game *game) { m_game = game; }
-
 void QtModel::moveStacksOnColumnClicked(const QModelIndex &idx) {
   if (idx.isValid()) {
     if ((*m_game)[idx.column()].hasWhite()) {
       m_game->moveStack(idx.column());
       emit dataChanged(index(0, 0),
                        index(ButtonStack::N_BUTTONS, m_game->N_STACKS));
+      emit turnChanged(m_game->turns());
+      emit stateChanged(m_game->getState());
+      if (m_game->isGameOver()) {
+        m_game->computeRoundPoints();
+        emit redTally(m_game->redVictoryPoints());
+        emit blackTally(m_game->blackVictoryPoints());
+        if ((m_game->redVictoryPoints() >= 15 &&
+             m_game->redVictoryPoints() > m_game->blackVictoryPoints()) ||
+            (m_game->blackVictoryPoints() >= 15 &&
+             m_game->blackVictoryPoints() > m_game->redVictoryPoints())) {
+          emit endGame(m_game->redVictoryPoints(),
+                       m_game->blackVictoryPoints());
+        } else {
+          emit roundTally(m_game->redRoundResult(), m_game->blackRoundResult());
+        }
+      }
     } else {
       QMessageBox msgBox;
       msgBox.setWindowTitle("Rule notification 🎮");
@@ -81,4 +97,22 @@ void QtModel::moveStacksOnColumnClicked(const QModelIndex &idx) {
       msgBox.exec();
     }
   }
+}
+
+void QtModel::setState(Game::GameState gs){
+  m_game->setState(gs);
+  emit stateChanged(m_game->getState());
+}
+
+void QtModel::replay() {
+  m_game->reset();
+  emit turnChanged(m_game->turns());
+  emit stateChanged(m_game->getState());
+  m_game->shuffleStacks();
+  emit dataChanged(index(0, 0),
+                   index(ButtonStack::N_BUTTONS, m_game->N_STACKS));
+}
+
+QtModel::~QtModel(){
+    delete m_game;
 }

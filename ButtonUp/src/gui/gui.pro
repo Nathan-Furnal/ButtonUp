@@ -9,15 +9,13 @@ include(../../config.pri)
 # DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000 # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    controller.cpp \
     main.cpp \
-    mainwindow.cpp \
     qtmodel.cpp \
+    tableview.cpp \
     view.cpp
 HEADERS += \
-    controller.h \
-    mainwindow.h \
     qtmodel.h \
+    tableview.h \
     view.h
 
 # Default rules for deployment.
@@ -26,6 +24,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = $${LIBRARY_OUT_PWD}/opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-FORMS += \
-    mainwindow.ui
+FORMS +=
 
