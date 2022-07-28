@@ -29,7 +29,7 @@ public:
    * input string and makes it lowercase, in place.
    * @param s, the string to cleanup.
    */
-  void cleanupInput(std::string &s);
+  void cleanupInput(std::string &str);
   /**
    * @brief parseStarter, parses the users' choice for who starts the game, the
    * only two valid answers are "black" or "red".
