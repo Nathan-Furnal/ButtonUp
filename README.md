@@ -11,9 +11,18 @@ various UI's.
 # TUI
 A textual interface for the game, it reads from `stdin` and writes to
 `stdout`. For a proper experience, a terminal supporting Unicode is required. If
-you are on Windows, you need to [use of the following
+you are on Windows, you need to [use the following
 hack](https://stackoverflow.com/questions/57131654/using-utf-8-encoding-chcp-65001-in-command-prompt-windows-powershell-window/57134096#57134096)
 to get Unicode support.
+
+For proper ANSI code support, a Windows registry might need to be modified. One needs
+to run (in the explorer) `regedit`, and navigate to
+`HKEY_CURRENT_USER\Console`. There, either modify the `VirtualTerminalLevel`
+registry to 1 or create it with a right click and set it to be a `DWORD`, then
+name it `VirtualTerminalLevel` and set it to 1. [See here for more
+info](https://ss64.com/nt/syntax-ansi.html).
+
+Note that it is not necessary on Linux.
 # GUI
 A Qt GUI for the game, it is implemented as a 2D view of the buttons. The
 players are first prompted to choose to first player and then clicking anywhere
