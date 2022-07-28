@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QtModel_t {
-    QByteArrayData data[14];
-    char stringdata0[144];
+    QByteArrayData data[15];
+    char stringdata0[147];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,18 +38,19 @@ QT_MOC_LITERAL(2, 20, 0), // ""
 QT_MOC_LITERAL(3, 21, 5), // "turns"
 QT_MOC_LITERAL(4, 27, 12), // "stateChanged"
 QT_MOC_LITERAL(5, 40, 15), // "Game::GameState"
-QT_MOC_LITERAL(6, 56, 8), // "redTally"
-QT_MOC_LITERAL(7, 65, 10), // "blackTally"
-QT_MOC_LITERAL(8, 76, 10), // "roundTally"
-QT_MOC_LITERAL(9, 87, 7), // "endGame"
-QT_MOC_LITERAL(10, 95, 25), // "moveStacksOnColumnClicked"
-QT_MOC_LITERAL(11, 121, 11), // "QModelIndex"
-QT_MOC_LITERAL(12, 133, 3), // "idx"
-QT_MOC_LITERAL(13, 137, 6) // "replay"
+QT_MOC_LITERAL(6, 56, 2), // "gs"
+QT_MOC_LITERAL(7, 59, 8), // "redTally"
+QT_MOC_LITERAL(8, 68, 10), // "blackTally"
+QT_MOC_LITERAL(9, 79, 10), // "roundTally"
+QT_MOC_LITERAL(10, 90, 7), // "endGame"
+QT_MOC_LITERAL(11, 98, 25), // "moveStacksOnColumnClicked"
+QT_MOC_LITERAL(12, 124, 11), // "QModelIndex"
+QT_MOC_LITERAL(13, 136, 3), // "idx"
+QT_MOC_LITERAL(14, 140, 6) // "replay"
 
     },
     "QtModel\0turnChanged\0\0turns\0stateChanged\0"
-    "Game::GameState\0redTally\0blackTally\0"
+    "Game::GameState\0gs\0redTally\0blackTally\0"
     "roundTally\0endGame\0moveStacksOnColumnClicked\0"
     "QModelIndex\0idx\0replay"
 };
@@ -71,25 +72,25 @@ static const uint qt_meta_data_QtModel[] = {
  // signals: name, argc, parameters, tag, flags
        1,    1,   54,    2, 0x06 /* Public */,
        4,    1,   57,    2, 0x06 /* Public */,
-       6,    1,   60,    2, 0x06 /* Public */,
-       7,    1,   63,    2, 0x06 /* Public */,
-       8,    2,   66,    2, 0x06 /* Public */,
-       9,    2,   71,    2, 0x06 /* Public */,
+       7,    1,   60,    2, 0x06 /* Public */,
+       8,    1,   63,    2, 0x06 /* Public */,
+       9,    2,   66,    2, 0x06 /* Public */,
+      10,    2,   71,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      10,    1,   76,    2, 0x0a /* Public */,
-      13,    0,   79,    2, 0x0a /* Public */,
+      11,    1,   76,    2, 0x0a /* Public */,
+      14,    0,   79,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
-    QMetaType::Void, 0x80000000 | 5,    2,
+    QMetaType::Void, 0x80000000 | 5,    6,
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, 0x80000000 | 12,   13,
     QMetaType::Void,
 
        0        // eod
