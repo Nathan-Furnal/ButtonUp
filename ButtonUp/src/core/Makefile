@@ -408,7 +408,8 @@ DIST          = core.pri \
 		core.pro button.h \
 		buttonstack.h \
 		game.h \
-		observer.h buttonstack.cpp \
+		observer.h \
+		util.h buttonstack.cpp \
 		game.cpp
 QMAKE_TARGET  = core
 DESTDIR       = 

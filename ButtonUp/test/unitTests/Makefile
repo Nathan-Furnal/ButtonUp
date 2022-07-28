@@ -52,8 +52,12 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = main.cpp 
-OBJECTS       = main.o
+SOURCES       = main.cpp \
+		test_buttonStack.cpp \
+		test_game.cpp 
+OBJECTS       = main.o \
+		test_buttonStack.o \
+		test_game.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -406,7 +410,9 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		unitTests.pro  main.cpp
+		unitTests.pro  main.cpp \
+		test_buttonStack.cpp \
+		test_game.cpp
 QMAKE_TARGET  = unitTests
 DESTDIR       = 
 TARGET        = unitTests
@@ -1167,8 +1173,20 @@ compiler_clean:
 
 ####### Compile
 
-main.o: main.cpp 
+main.o: main.cpp ../../libs/catch2/catch.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+test_buttonStack.o: test_buttonStack.cpp ../../src/core/buttonstack.h \
+		../../src/core/button.h \
+		../../libs/catch2/catch.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o test_buttonStack.o test_buttonStack.cpp
+
+test_game.o: test_game.cpp ../../libs/catch2/catch.hpp \
+		../../src/core/game.h \
+		../../src/core/buttonstack.h \
+		../../src/core/button.h \
+		../../src/core/observer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o test_game.o test_game.cpp
 
 ####### Install
 

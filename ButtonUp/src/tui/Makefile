@@ -411,7 +411,6 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		tui.pro controller.h \
-		util.h \
 		view.h controller.cpp \
 		main.cpp \
 		view.cpp
@@ -1181,7 +1180,7 @@ controller.o: controller.cpp controller.h \
 		../core/buttonstack.h \
 		../core/button.h \
 		../core/observer.h \
-		util.h
+		../core/util.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o controller.o controller.cpp
 
 main.o: main.cpp controller.h \
