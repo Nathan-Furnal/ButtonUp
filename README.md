@@ -20,3 +20,15 @@ round and end of game management is available.
 Tests the core functionalities of the game by checking that the moves are
 properly implemented and walking through a game step by step to check that all
 specific cases are handled.
+# Design patterns
+
+The more obvious choice for the TUI was using the MVC with a bit of the Observer
+pattern. In short, the model has the core logic, the view manages I/O and the
+controller parses the input from the view and has the model react
+accordingly. The observer pattern is used to update the view when the model is
+changed.
+
+In the GUI, it's a bit different since Qt offers the possibility of the
+Model-View pattern and there's no need to implement the Observer pattern from
+scratch as we can use signal and slots instead, which more or less equivalent to
+the notify/update found in the observer pattern.
