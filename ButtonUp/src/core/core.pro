@@ -15,7 +15,6 @@ HEADERS += \
     util.h
 
 SOURCES += \
-    buttonstack.cpp \
     game.cpp
 
 DISTFILES += \

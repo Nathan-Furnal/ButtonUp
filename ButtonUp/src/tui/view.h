@@ -18,7 +18,7 @@ public:
    * @brief View, the view constructor.
    * @param g, the game that the view will represent.
    */
-  View(Game &g);
+  explicit View(Game &g);
   /**
    * @brief displayBanner, displays the game banner with a presentation and a
    * short explanation about the game.

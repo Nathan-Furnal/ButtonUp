@@ -32,12 +32,12 @@ public:
    * @brief getState, the state getter.
    * @return the current game state.
    */
-  GameState getState() const;
+  constexpr GameState getState() const { return m_state; }
   /**
    * @brief setState, the state setter.
    * @param gs, the new state.
    */
-  void setState(GameState gs);
+  constexpr void setState(GameState gs) { m_state = gs; }
   /**
    * @brief moveStack, the main game logic. It manages the two possibilites of
    * dividing the buttons among the stacks when there are fewer buttons than
@@ -52,13 +52,22 @@ public:
    * over after 8 turns.
    * @return true if the game is over and false otherwise.
    */
-  bool isGameOver();
+  constexpr bool isGameOver() { return m_turns == 8; };
   /**
    * @brief reset, resets the game attributes and states: the state returns to
    * "begin", the stacks are emptied, the round scores are set to zero. Note
    * that the victory points are not changed since they are used across rounds.
    */
-  void reset();
+  constexpr void reset() {
+    m_state = GameState::BEGIN;
+    m_turns = 0;
+    m_roundResultBlack = 0;
+    m_roundResultRed = 0;
+    m_roundResult = 0;
+    for (size_t i = 0; i < N_STACKS; i++) {
+      m_stacks[i].reset();
+    }
+  }
   /**
    * @brief shuffleStacks, shuffles the <buttons> attribute and divides the
    * buttons among the stacks during the placement phase.
@@ -102,35 +111,61 @@ public:
    * @brief computeRoundPoints, computes each players' points at the end of the
    * round and updates the victory points.
    */
-  void computeRoundPoints();
+  constexpr void computeRoundPoints() {
+    // avoid using nonEmpty method because vectors make constexpr stuff
+    // difficult
+    int idx = 0;
+    for (size_t i = 0; i < N_STACKS; ++i) {
+      if (!m_stacks[i].isEmpty()) {
+        idx = i;
+        break;
+      }
+    }
+    for (size_t i = 0; i < ButtonStack::N_BUTTONS; ++i) {
+      if (m_stacks[idx][i] == Button::RED) {
+        m_roundResultRed += i + 1;
+      }
+      if (m_stacks[idx][i] == Button::BLACK) {
+        m_roundResultBlack += i + 1;
+      }
+    }
+    // if result is >= 0, red won else black won
+    // will be useful to display points later on
+    m_roundResult = m_roundResultRed - m_roundResultBlack;
+    if (m_roundResult >= 0) {
+      m_redVictoryPoints += m_roundResult;
+    } else {
+      m_blackVictoryPoints += -(m_roundResult);
+    }
+  };
   /**
    * @brief turns, the number of turns getter.
    * @return the current number of turns that already have been played.
    */
-  int turns() const;
+  constexpr int turns() const { return m_turns; };
   /**
    * @brief redRoundResult, the getter for the round result of the red player.
    * @return the current round score of the red player.
    */
-  int redRoundResult() const;
+  constexpr int redRoundResult() const { return m_roundResultRed; };
   /**
    * @brief blackRoundResult, the getter for the round result of the black
    * player.
    * @return the current round score of the black player.
    */
-  int blackRoundResult() const;
+  constexpr int blackRoundResult() const { return m_roundResultBlack; };
   /**
    * @brief redVictoryPoints, the getter for the victory points of the red
    * player.
    * @return the current victory points of the red player.
    */
-  int redVictoryPoints() const;
+  constexpr int redVictoryPoints() const { return m_redVictoryPoints; };
   /**
    * @brief blackVictoryPoints, the getter for the victory points of the black
    * player.
    * @return the current victory points of the black player.
    */
-  int blackVictoryPoints() const;
+  constexpr int blackVictoryPoints() const { return m_blackVictoryPoints; };
 
 private:
   /**

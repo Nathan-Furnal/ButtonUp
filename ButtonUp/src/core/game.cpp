@@ -5,23 +5,6 @@ Game::Game() {
   shuffleStacks();
 }
 
-Game::GameState Game::getState() const { return m_state; }
-
-void Game::setState(Game::GameState gs) { m_state = gs; }
-
-bool Game::isGameOver() { return m_turns == 8; }
-
-void Game::reset() {
-  m_state = GameState::BEGIN;
-  m_turns = 0;
-  m_roundResultBlack = 0;
-  m_roundResultRed = 0;
-  m_roundResult = 0;
-  for (size_t i = 0; i < N_STACKS; i++) {
-    m_stacks[i].reset();
-  }
-}
-
 void Game::shuffleStacks(bool testMode) {
   if (!testMode) {
     auto rng = std::default_random_engine{};
@@ -109,30 +92,4 @@ void Game::moveStack(int srcPos) {
   notifyAll();
 }
 
-void Game::computeRoundPoints() {
-  int idx = nonEmptyStacks(0)[0];
-  for (size_t i = 0; i < ButtonStack::N_BUTTONS; ++i) {
-    if (m_stacks[idx][i] == Button::RED) {
-      m_roundResultRed += i + 1;
-    }
-    if (m_stacks[idx][i] == Button::BLACK) {
-      m_roundResultBlack += i + 1;
-    }
-  }
-  // if result is >= 0, red won else black won
-  // will be useful to display points later on
-  m_roundResult = m_roundResultRed - m_roundResultBlack;
-  if (m_roundResult >= 0) {
-    m_redVictoryPoints += m_roundResult;
-  } else {
-    m_blackVictoryPoints += -(m_roundResult);
-  }
-}
-
 ButtonStack &Game::operator[](int idx) { return m_stacks.at(idx); }
-
-int Game::turns() const { return m_turns; }
-int Game::redRoundResult() const { return m_roundResultRed; }
-int Game::blackRoundResult() const { return m_roundResultBlack; }
-int Game::redVictoryPoints() const { return m_redVictoryPoints; }
-int Game::blackVictoryPoints() const { return m_blackVictoryPoints; }
