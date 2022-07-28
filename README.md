@@ -10,7 +10,10 @@ building blocks of the game and packages it in a library to be used in the
 various UI's.
 # TUI
 A textual interface for the game, it reads from `stdin` and writes to
-`stdout`. For a proper experience, a terminal supporting Unicode is required.
+`stdout`. For a proper experience, a terminal supporting Unicode is required. If
+you are on Windows, you need to [use of the following
+hack](https://stackoverflow.com/questions/57131654/using-utf-8-encoding-chcp-65001-in-command-prompt-windows-powershell-window/57134096#57134096)
+to get Unicode support.
 # GUI
 A Qt GUI for the game, it is implemented as a 2D view of the buttons. The
 players are first prompted to choose to first player and then clicking anywhere
