@@ -31,9 +31,9 @@ QVariant QtModel::headerData(int section, Qt::Orientation orientation,
   return QVariant();
 }
 
-int QtModel::rowCount(const QModelIndex & /*parent*/) const { return 9; }
+int QtModel::rowCount(const QModelIndex & /*parent*/) const { return ButtonStack::N_BUTTONS; }
 
-int QtModel::columnCount(const QModelIndex & /*parent*/) const { return 9; }
+int QtModel::columnCount(const QModelIndex & /*parent*/) const { return Game::N_STACKS; }
 
 QVariant QtModel::data(const QModelIndex &index, int role) const {
   int row = index.row();

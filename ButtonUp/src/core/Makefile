@@ -49,10 +49,8 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = buttonstack.cpp \
-		game.cpp 
-OBJECTS       = buttonstack.o \
-		game.o
+SOURCES       = game.cpp 
+OBJECTS       = game.o
 DIST          = core.pri \
 		/usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
@@ -409,8 +407,7 @@ DIST          = core.pri \
 		buttonstack.h \
 		game.h \
 		observer.h \
-		util.h buttonstack.cpp \
-		game.cpp
+		util.h game.cpp
 QMAKE_TARGET  = core
 DESTDIR       = 
 TARGET        = libcore.a
@@ -1172,10 +1169,6 @@ compiler_lex_clean:
 compiler_clean: 
 
 ####### Compile
-
-buttonstack.o: buttonstack.cpp buttonstack.h \
-		button.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o buttonstack.o buttonstack.cpp
 
 game.o: game.cpp game.h \
 		buttonstack.h \

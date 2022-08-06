@@ -15,7 +15,7 @@ public:
    * @brief ButtonStack, the default constructor which fills the stack with
    * empty buttons.
    */
-  ButtonStack();
+  constexpr ButtonStack() {}
   /**
    * @brief N_BUTTONS, the maximum number of buttons in a stack.
    */
@@ -24,28 +24,45 @@ public:
    * @brief hasWhite, checks if a stack contains a white button.
    * @return true if the stack has a white button and false otherwise.
    */
-  bool hasWhite() const;
+  constexpr bool hasWhite() const {
+    for (auto const &el : m_stack) {
+      if (el == Button::WHITE)
+        return true;
+    }
+    return false;
+  }
   /**
    * @brief isEmpty, checks if the stack is empty. The current implementation
    * only checks that the first element of the stack is empty, as a LIFO
    * datastructure, this is sufficient.
    * @return true if the stack is empty and false otherwise.
    */
-  bool isEmpty() const;
+  constexpr bool isEmpty() const { return m_stack[0] == Button::EMPTY; }
   /**
    * @brief nButtons, counts the number of non-empty buttons within a stack.
    * @return the number of non-empty buttons.
    */
-  int nButtons() const;
+  constexpr int nButtons() const { return m_stackPointer; }
   /**
    * @brief push, adds a new button onto the stack.
    * @param b, the button to push onto the stack.
    */
-  void push(enum Button b);
+  constexpr void push(enum Button b) {
+    if (b != Button::EMPTY && m_stackPointer <= N_BUTTONS) {
+      m_stack[m_stackPointer++] = b;
+    }
+  }
+
   /**
    * @brief reset, resets the stacks by having only empty elements in it.
    */
-  void reset();
+  constexpr void reset() {
+    m_stackPointer = 0;
+    for (std::size_t i = 0; i < N_BUTTONS; ++i) {
+      m_stack[i] = Button::EMPTY;
+    }
+  }
+
   /**
    * @brief has2SameButtons, checks if the two top buttons are the same which is
    * useful for the replay rule of the game. To avoid a false positive on an
@@ -53,14 +70,20 @@ public:
    * greater than 2.
    * @return true if the two (non-empty) top buttons of the stack are the same.
    */
-  bool has2SameButtons();
+  constexpr bool has2SameButtons() const {
+    if (nButtons() < 2) {
+      return false;
+    } else {
+      return m_stack[m_stackPointer - 1] == m_stack[m_stackPointer - 2];
+    }
+  }
   /**
    * @brief operator [], subscript operator overload to access data from the
    * underlying array.
    * @param idx, the index to access the data at.
    * @return the button at the given index.
    */
-  enum Button operator[](int idx);
+  constexpr enum Button operator[](int idx) { return m_stack.at(idx); }
 
 private:
   /**
@@ -70,7 +93,9 @@ private:
   /**
    * @brief m_stack, the hybrid stack array to store the data.
    */
-  std::array<Button, N_BUTTONS> m_stack;
+  std::array<Button, N_BUTTONS> m_stack{
+      Button::EMPTY, Button::EMPTY, Button::EMPTY, Button::EMPTY, Button::EMPTY,
+      Button::EMPTY, Button::EMPTY, Button::EMPTY, Button::EMPTY};
 };
 
 #endif // BUTTONSTACK_H
