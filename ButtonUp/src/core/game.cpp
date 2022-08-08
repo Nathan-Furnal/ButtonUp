@@ -51,7 +51,10 @@ void Game::notifyAll() {
   }
 }
 
-void Game::moveStack(int srcPos) {
+void Game::moveStack(int srcPos, bool testMode) {
+    if(!m_stacks[srcPos].hasWhite() && !testMode){
+        throw std::invalid_argument("Button stack does not contain a white button.");
+    }
   bool replay = false;
   auto nonEmptyIndices = nonEmptyStacks(srcPos);
   int nButtons = m_stacks[srcPos].nButtons();

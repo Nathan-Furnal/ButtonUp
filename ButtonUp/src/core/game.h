@@ -45,7 +45,7 @@ public:
    * move has to go clockwise, only the starting position is necessary.
    * @param srcPos, the position from which the move is made.
    */
-  void moveStack(int srcPos);
+  void moveStack(int srcPos, bool testMode = false);
   /**
    * @brief isGameOver, checks if the game is over. Since playing a move is
    * mandatory and the number of buttons is constant (9), the game is always
@@ -58,7 +58,10 @@ public:
    * "begin", the stacks are emptied, the round scores are set to zero. Note
    * that the victory points are not changed since they are used across rounds.
    */
-  constexpr void reset() {
+  constexpr void reset(bool testMode = false) {
+      if(m_state != GameState::GAME_OVER && !testMode){
+          throw std::runtime_error("The game can only be reset once it's over.");
+      }
     m_state = GameState::BEGIN;
     m_turns = 0;
     m_roundResultBlack = 0;

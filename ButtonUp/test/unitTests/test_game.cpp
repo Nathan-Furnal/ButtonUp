@@ -21,7 +21,7 @@ TEST_CASE("Game tests") {
     // <WHITE, WHITE, WHITE, RED, RED, RED, BLACK, BLACK, BLACK>
     // <  0,     1,     2,    3,   4,   5,    6,     7,     8  >
     Game g{};
-    g.reset();
+    g.reset(true);
     g.shuffleStacks(true);
     // In the core game logic, there is no protection for moving colors
     // other than white because the controller must take care of that
@@ -37,41 +37,42 @@ TEST_CASE("Game tests") {
     REQUIRE(g[8][0] == Button::BLACK);
     // --- Test moves --- /
     g.setState(Game::RED); // Let RED be first
-    g.moveStack(0);        // Makes 0 empty and 1 has 2 buttons
+    g.moveStack(0, true);        // Makes 0 empty and 1 has 2 buttons
     REQUIRE(
         g.getState() ==
         Game::RED); // As there was 2 same buttons on <1>, state does not change
     REQUIRE(g[0].isEmpty());
     REQUIRE(g[1].nButtons() == 2);
     REQUIRE(g[1].has2SameButtons());
-    g.moveStack(1); // 1 has 2 buttons -> they go to 2 and 3 respectively
+    g.moveStack(1, true); // 1 has 2 buttons -> they go to 2 and 3 respectively
     REQUIRE(g.getState() == Game::BLACK); // State has changed since there
                                           // aren't 2 same buttons on top
     REQUIRE(g[1].isEmpty());
     REQUIRE((g[2][0] == Button::WHITE && g[2][1] == Button::WHITE));
     REQUIRE((g[3][0] == Button::RED && g[2][1] == Button::WHITE));
-    g.moveStack(2); // 2 has 2 buttons -> 3 has 3 buttons and 4 has 2 buttons
-    g.moveStack(3); // 3 has buttons -> 4 has 3 buttons 5 & 6 have 2 buttons
+    g.moveStack(2, true); // 2 has 2 buttons -> 3 has 3 buttons and 4 has 2 buttons
+    g.moveStack(3, true); // 3 has buttons -> 4 has 3 buttons 5 & 6 have 2 buttons
     REQUIRE(g[3].isEmpty());
+    REQUIRE_THROWS(g.moveStack(3)); // In game mode, stacks not containing white buttons throw an error
     REQUIRE(g[4].nButtons() == 3);
     REQUIRE(g[5].nButtons() == 2);
     REQUIRE(g[6].nButtons() == 2);
     g.moveStack(
-        8); // Moving 8, it will go to the first non empty -> 4 has 4 buttons
+        8, true); // Moving 8, it will go to the first non empty -> 4 has 4 buttons
     REQUIRE(g[8].isEmpty());
     REQUIRE(g[4].nButtons() == 4);
-    g.moveStack(7); // Moving 7 -> 4 has 5 buttons
+    g.moveStack(7, true); // Moving 7 -> 4 has 5 buttons
     REQUIRE(g[7].isEmpty());
     REQUIRE(g[4].nButtons() == 5);
     // NOW ==> 4: 5buttons, 5: 2buttons, 6: 2buttons (9 total)
     // Moving 4 will empty 4, cause 5 to have 3 buttons and 6 to have 6 buttons
-    g.moveStack(4);
+    g.moveStack(4, true);
     REQUIRE(g[4].isEmpty());
     REQUIRE(g[5].nButtons() == 3);
     REQUIRE(g[6].nButtons() == 6);
     // Moving 6 will drop the remaning buttons into 5
     // Meaning that 5 has 9 buttons and the game is over!
-    g.moveStack(6);
+    g.moveStack(6, true);
     REQUIRE(g[6].isEmpty());
     REQUIRE(g[5].nButtons() == 9);
     REQUIRE(g.isGameOver());
