@@ -58,7 +58,7 @@ void Game::moveStack(int srcPos, bool testMode) {
   bool replay = false;
   auto nonEmptyIndices = nonEmptyStacks(srcPos);
   int nButtons = m_stacks[srcPos].nButtons();
-  int nStacks = (int)nonEmptyIndices.size() - 1;
+  int nStacks = (int)nonEmptyIndices.size() - 1; // -1 because current stack shouldn't be counted
   if (nButtons <= nStacks) {
     for (int i = 0; i < nButtons; i++) {
       // avoid pushing to self, hence +1
@@ -69,7 +69,7 @@ void Game::moveStack(int srcPos, bool testMode) {
     }
   } else { // number of buttons is strictly superior to available stacks
     int i = 0;
-    while (i < nStacks) {
+    while (i < nStacks) { // do the same as above until there's one stack left
       // avoid pushing to self, hence +1
       m_stacks[nonEmptyIndices[i + 1]].push(m_stacks[srcPos][i]);
       i++;
