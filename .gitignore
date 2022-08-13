@@ -41,3 +41,8 @@ Makefile*
 
 # pas de fichier .qmake.stash
 .qmake.stash
+
+# Pas de fichier autre que le rapport
+*.tex
+*.org
+_minted*

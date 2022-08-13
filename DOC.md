@@ -1,4 +1,4 @@
-# information
+# Information
 
 The game information can be found over [at this
 link](https://boardgamegeek.com/boardgame/119856/button). For completion and in
