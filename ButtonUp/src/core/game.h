@@ -6,6 +6,7 @@
 #include <iostream>
 #include <random>
 #include <vector>
+#include <functional>
 /**
  * @brief The Game class, the main class containing the game logic with 9 button
  * stacks. It is also observable, notifying any observer of state changes.
@@ -58,7 +59,7 @@ public:
    * "begin", the stacks are emptied, the round scores are set to zero. Note
    * that the victory points are not changed since they are used across rounds.
    */
-  constexpr void reset(bool testMode = false) {
+  void reset(bool testMode = false) {
       if(m_state != GameState::GAME_OVER && !testMode){
           throw std::runtime_error("The game can only be reset once it's over.");
       }
@@ -114,7 +115,7 @@ public:
    * @brief computeRoundPoints, computes each players' points at the end of the
    * round and updates the victory points.
    */
-  constexpr void computeRoundPoints() {
+  void computeRoundPoints() {
     // avoid using nonEmpty method because vectors make constexpr stuff
     // difficult
     int idx = 0;
