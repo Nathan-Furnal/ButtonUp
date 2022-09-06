@@ -52,6 +52,3 @@ gui
 tui
 libcore.*
 unitTests
-
-# Pas de fichiers moc
-moc_*
