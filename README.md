@@ -1,9 +1,8 @@
 # Introduction
 
-This is the ButtonUp! project for Nathan Furnal (55803). You can find more
-information about the code in the following points. More explanation about how
-to play the game can be found in the `DOC.md` file. More details about the
-design choices and algorithm can be found in the `Report.pdf` file.
+You can find more information about the code in this file. More explanation
+about how to play the game can be found in the `DOC.md` file. More details about
+the design choices and algorithm can be found in the `Report.pdf` file.
 
 # Core
 This section of the code contains the core logic of the game. It implements the
