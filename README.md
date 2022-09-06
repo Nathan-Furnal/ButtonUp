@@ -4,6 +4,16 @@ You can find more information about the code in this file. More explanation
 about how to play the game can be found in the `DOC.md` file. More details about
 the design choices and algorithm can be found in the `Report.pdf` file.
 
+# Demo
+
+Here's a demo of the game with a few rounds until one player wins the game.
+
+
+
+https://user-images.githubusercontent.com/45597572/188702889-82320d6a-2496-427c-8316-1fcb51489506.mp4
+
+
+
 # Core
 This section of the code contains the core logic of the game. It implements the
 building blocks of the game and packages it in a library to be used in the
