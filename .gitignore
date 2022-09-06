@@ -46,3 +46,12 @@ Makefile*
 *.tex
 *.org
 _minted*
+
+# Pas de fichier exécutables et bibliothèques
+gui
+tui
+libcore.*
+unitTests
+
+# Pas de fichiers moc
+moc_*
