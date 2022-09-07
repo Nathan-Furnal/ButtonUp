@@ -54,3 +54,7 @@ In the GUI, it's a bit different since Qt offers the possibility of the
 Model-View pattern and there's no need to implement the Observer pattern from
 scratch as we can use signal and slots instead, which more or less equivalent to
 the notify/update found in the observer pattern.
+
+# Credits
+
+Project devised and created during my studies at the École Supérieure d'Informatique (ESI), Brussels.
